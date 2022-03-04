@@ -174,7 +174,7 @@ function OnPopulateSettingsPanel(panel)
 	end
 
 	panel:AddControl("Label", {
-		Text = "Chance of spawning a hero."
+		Text = "How long to wait between spawn waves."
 	})
 	
 		local p = panel:AddControl("Slider", {
