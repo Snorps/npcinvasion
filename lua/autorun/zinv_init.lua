@@ -64,6 +64,7 @@ util.AddNetworkString("zinv_maxspawn")
 util.AddNetworkString("zinv_chaseplayers")
 util.AddNetworkString("zinv_spawnatonce")
 util.AddNetworkString("zinv_spawndelay")
+util.AddNetworkString("zinv_herochance")
 concommand.Add("zinv_reloadsettings", loadNPCInfo)
 
 
@@ -365,7 +366,7 @@ function spawnZombie(pos)
 
 	local heroChance = math.random(0, 100)
 	heroSpawnEntry = nil
-	if heroChance == 1 then
+	if heroChance <= GetConVarNumber("zinv_herochance") then
 		for _, v in pairs(spawnedHeroes) do
 			if v["instance"] == -1 and (!v["last_died"] or os.difftime(os.time(), v["last_died"]) >= HERO_COOLDOWN) then
 				heroSpawnEntry = v

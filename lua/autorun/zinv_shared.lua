@@ -30,6 +30,10 @@ if !ConVarExists("zinv_spawndelay") then
     CreateConVar("zinv_spawndelay", '5', {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 end
 
+if !ConVarExists("zinv_herochance") then
+    CreateConVar("zinv_herochance", '1', {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
 if !SERVER then return end
 
 net.Receive("zinv", function(len,ply)
@@ -77,5 +81,11 @@ end)
 net.Receive("zinv_spawndelay", function(len,ply)
 	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
 		RunConsoleCommand("zinv_spawndelay", net.ReadFloat())
+	end
+end)
+
+net.Receive("zinv_herochance", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("zinv_herochance", net.ReadFloat())
 	end
 end)

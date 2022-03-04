@@ -174,7 +174,29 @@ function OnPopulateSettingsPanel(panel)
 	end
 
 	panel:AddControl("Label", {
-		Text = "How long to wait between spawn waves."
+		Text = "Chance of spawning a hero."
+	})
+	
+		local p = panel:AddControl("Slider", {
+		Label = "Chance of spawning a hero.",
+		Type = "Long",
+		Min = "0",
+		Max = "100",
+	})
+	p:SetValue( GetConVarNumber( "zinv_herochance" ))
+	p.OnValueChanged = function(self)
+		if LocalPlayer():IsSuperAdmin() then
+			net.Start("zinv_herochance")
+			net.WriteFloat(self:GetValue())
+			net.SendToServer()
+		else
+			chat.AddText(Color(255,62,62), "WARNING: ", Color(255,255,255), "You must be a super-admin to change this option.")
+			chat.PlaySound()
+		end			
+	end
+
+	panel:AddControl("Label", {
+		Text = "Percentage of NPCs that will be heroes."
 	})
 
 	panel:AddControl("Label", {
