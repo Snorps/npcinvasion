@@ -49,8 +49,6 @@ defaultSettings = [[
 }
 ]]
 
-HERO_COOLDOWN = 60
-
 util.AddNetworkString("send_ztable_cl")
 util.AddNetworkString("send_ztable_sr")
 util.AddNetworkString("change_zinv_profile")
@@ -65,6 +63,7 @@ util.AddNetworkString("zinv_chaseplayers")
 util.AddNetworkString("zinv_spawnatonce")
 util.AddNetworkString("zinv_spawndelay")
 util.AddNetworkString("zinv_herochance")
+util.AddNetworkString("zinv_herocooldown")
 concommand.Add("zinv_reloadsettings", loadNPCInfo)
 
 
@@ -368,7 +367,7 @@ function spawnZombie(pos)
 	heroSpawnEntry = nil
 	if heroChance <= GetConVarNumber("zinv_herochance") then
 		for _, v in pairs(spawnedHeroes) do
-			if v["instance"] == -1 and (!v["last_died"] or os.difftime(os.time(), v["last_died"]) >= HERO_COOLDOWN) then
+			if v["instance"] == -1 and (!v["last_died"] or os.difftime(os.time(), v["last_died"]) >= GetConVarNumber( "zinv_herocooldown")) then
 				heroSpawnEntry = v
 			end
 		end
@@ -384,7 +383,11 @@ function spawnZombie(pos)
 			if hero then
 				print("Spawning hero ", hero)
 				if heroSpawnEntry["weapon"] then
-					hero:SetKeyValue("additionalequipment", heroSpawnEntry["weapon"])
+					if (heroSpawnEntry["weapon"] == "Default Weapon") then
+						hero:SetKeyValue("additionalequipment", "")
+					else
+						hero:SetKeyValue("additionalequipment", heroSpawnEntry["weapon"])
+					end
 				end
 				hero:SetPos(pos)
 				hero:SetAngles(Angle(0, math.random(0, 360), 0))

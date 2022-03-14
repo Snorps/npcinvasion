@@ -177,7 +177,7 @@ function OnPopulateSettingsPanel(panel)
 		Text = "How long to wait between spawn waves."
 	})
 	
-		local p = panel:AddControl("Slider", {
+	local p = panel:AddControl("Slider", {
 		Label = "Chance of spawning a hero.",
 		Type = "Long",
 		Min = "0",
@@ -196,7 +196,29 @@ function OnPopulateSettingsPanel(panel)
 	end
 
 	panel:AddControl("Label", {
-		Text = "Percentage of NPCs that will be heroes."
+		Text = "Percentage chance of an NPC spawning as a hero."
+	})
+	
+	local p = panel:AddControl("Slider", {
+		Label = "Cooldown between hero spawns.",
+		Type = "Long",
+		Min = "0",
+		Max = "680",
+	})
+	p:SetValue( GetConVarNumber( "zinv_herocooldown" ))
+	p.OnValueChanged = function(self)
+		if LocalPlayer():IsSuperAdmin() then
+			net.Start("zinv_herocooldown")
+			net.WriteFloat(self:GetValue())
+			net.SendToServer()
+		else
+			chat.AddText(Color(255,62,62), "WARNING: ", Color(255,255,255), "You must be a super-admin to change this option.")
+			chat.PlaySound()
+		end			
+	end
+
+	panel:AddControl("Label", {
+		Text = "Minimum wait between hero spawns. Overrides hero chance. (Note that only one instance of each hero can exist at once)"
 	})
 
 	panel:AddControl("Label", {
