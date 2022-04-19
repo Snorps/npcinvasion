@@ -384,7 +384,15 @@ function spawnZombie(pos)
 				print("Spawning hero ", hero)
 				if heroSpawnEntry["weapon"] then
 					if (heroSpawnEntry["weapon"] == "Default Weapon") then
-						hero:SetKeyValue("additionalequipment", "")
+						local AllNpcs = list.Get( "NPC" )
+						for k, npc in pairs( AllNpcs ) do 
+							  if istable( npc.Weapons ) then -- Checks and ignores nil values
+									if npc.Class == heroInfo["Class"] then
+										print("giving npc weapon ", npc.Weapons[ math.random( #npc.Weapons)])
+										hero:SetKeyValue("additionalequipment", npc.Weapons[ math.random( #npc.Weapons ) ])
+									end
+							  end
+						end
 					else
 						hero:SetKeyValue("additionalequipment", heroSpawnEntry["weapon"])
 					end

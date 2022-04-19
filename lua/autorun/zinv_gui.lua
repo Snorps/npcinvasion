@@ -8,7 +8,7 @@ SpawnMenu.models = {
 	"None"
 }
 SpawnMenu.weapons = { 
-	"Default Weapon", "None", "weapon_357", "weapon_alyxgun", "weapon_annabelle", "weapon_ar2",
+	--[["Default Weapon", ]]"None", "weapon_357", "weapon_alyxgun", "weapon_annabelle", "weapon_ar2",
 	"weapon_crossbow", "weapon_crowbar", "weapon_frag", "weapon_pistol", "weapon_rpg",
 	"weapon_shotgun", "weapon_smg1", "weapon_stunstick"
 }
